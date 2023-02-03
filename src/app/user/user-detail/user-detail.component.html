@@ -1,0 +1,18 @@
+<div class="body">
+  <div class="card-container">
+    <h1 class="user">USER DETAILS</h1>
+    <div class="image-container">
+      <img [src]="userinfo.avatar" alt="" class="round">
+    </div>
+
+    <div class="name-container">
+      <span class="firstname">{{userinfo.first_name}} </span>
+      <span class="lastname"> {{userinfo.last_name}}</span>
+    </div>
+    <p class="email">{{userinfo.email}}</p>
+    
+    <button  (click)="onBack()" class="button btn btn-primary" style="background: #28223f; border: 1px solid #401ec7;">Back</button>
+    <!-- <button  class="button btn btn-primary">Update</button> -->
+    <button (click)="Delete(userinfo.userid)" class="button btn btn-primary">Delete</button>
+  </div>
+</div>
