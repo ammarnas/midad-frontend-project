@@ -8,13 +8,15 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserguardGuard } from './user/user-detail/userguard.guard';
+import { AddUserComponent } from './user/add-user/add-user.component';
 
 @NgModule({
   declarations: [     // Add all component here
     AppComponent,
     authComponent,
     userComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
