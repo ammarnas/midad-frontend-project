@@ -20,4 +20,6 @@ export class UserAuthService {
   loginrUser(user: IUser) {
     return this.http.post<any>(this._loginUrl,user);
   }
+
+  
 }

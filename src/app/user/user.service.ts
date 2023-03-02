@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
+import { IUser } from './interface/auth.interface';
 import { Response } from './interface/response.interface';
 import { User } from './interface/user.interface';
 
@@ -60,6 +61,10 @@ export class UserService {
         ),
       },
     };
+  }
+
+  createUser(user: IUser){
+    return this.http.post<any>(this.userUrl,user);
   }
 }
 

@@ -8,13 +8,16 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserguardGuard } from './user/user-detail/userguard.guard';
+import { AddUserComponent } from './user/add-user/add-user.component';
+import { UserAuthGuard } from './user/guard/user-auth.guard';
 
 @NgModule({
   declarations: [     // Add all component here
     AppComponent,
     authComponent,
     userComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
@@ -22,13 +25,17 @@ import { UserguardGuard } from './user/user-detail/userguard.guard';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path:'users' , component : userComponent },
+      { path:'users' ,
+      component : userComponent,
+      canActivate: [UserAuthGuard]
+    },
       {
         path:'users/:id' ,
         component : UserDetailComponent ,
-        canActivate: [UserguardGuard]
+        canActivate: [UserAuthGuard]
       },
       { path:'login' , component : authComponent },
+      { path:'create' , component : AddUserComponent },
 
       //  General Paths
       { path:'' , component : authComponent , pathMatch:'full' },
