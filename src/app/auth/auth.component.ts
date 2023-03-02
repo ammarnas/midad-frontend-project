@@ -1,12 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { IUser } from '../user/interface/auth.interface';
 import { UserAuthService } from './userauth.service';
 import {
-  FormBuilder,
   FormControl,
-  FormGroup,
-  Validators,
+  FormGroup
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -16,11 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.css'],
 })
 export class authComponent implements OnInit {
-  email: string = 'eve.holt@reqres.in';
-  pass: string = 'cityslicka';
+  
   loginform!: FormGroup;
+  userToken: any[] = [];
+  token: string;
 
-  constructor(private authService: UserAuthService) {}
+  constructor(private authService: UserAuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginform = new FormGroup({
@@ -42,8 +39,12 @@ export class authComponent implements OnInit {
 
   login() {
     this.authService.loginrUser(this.loginform.value).subscribe(
-      (user) => {
-        console.log(user);
+      (res) => {
+        this.token = res.token;    // Get the token        
+        this.addToAuthToLS(this.token);
+        this.router.navigate(['/users']);
+        // console.log(res);  
+        // console.log(this.userToken);
       },
       (err) => {
         console.log(err.error);
@@ -51,21 +52,19 @@ export class authComponent implements OnInit {
     );
   }
 
-  //   loginUser() {
-  //     this.loginUserData.email=this.email;
-  //     this.loginUserData.password=this.pass;
-  //     this._auth.loginrUser(this.loginUserData).subscribe(
-  //         res => console.log(res)
-  //     )
-  // }
-  // private _loginUrl = 'https://reqres.in/api/login';
-  // private _registerUrl = 'https://reqres.in/api/register';
-
-  // registerUser(user: IUser) {
-  //   return this.http.post<any>(this._registerUrl,user);
-  // }
-
-  // loginrUser(user: IUser) {
-  //   return this.http.post<any>(this._loginUrl,user);
-  // }
+  addToAuthToLS(token: any) {
+    if("auth" in localStorage) {
+      this.userToken = JSON.parse(localStorage.getItem("auth")!);
+      let exsit = this.userToken.find(item => item === token);
+      if(exsit) {
+        alert("You are already Login")
+      }else {
+        this.userToken.push(token)
+        localStorage.setItem("auth" , JSON.stringify(this.userToken));
+      }
+    } else {
+      this.userToken.push(token)
+      localStorage.setItem("auth" , JSON.stringify(this.userToken));
+    }
+  }
 }
