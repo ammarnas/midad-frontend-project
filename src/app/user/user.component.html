@@ -30,7 +30,12 @@
     </tbody>
 </table>
 
-
+<div class="row">
+    <div class="btn-group flot-right">
+        <button class="btn btn-outline-primary fs-4 p-1" *ngFor="let page of PageNumbers" (click)="changePage(page)" 
+            [class.active]="page == selectedPage">{{page}}</button>
+    </div>
+</div>
 <!-- <div *ngIf="response" class="card">
     <div class="card-body" >
         <p class="card-text">page : {{response.metadata.page}}</p>

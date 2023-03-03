@@ -7,7 +7,6 @@ import { userComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { UserguardGuard } from './user/user-detail/userguard.guard';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { UserAuthGuard } from './user/guard/user-auth.guard';
 

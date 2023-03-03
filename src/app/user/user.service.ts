@@ -19,6 +19,11 @@ export class UserService {
     );
   }
 
+  getAllUsersByPage(Page :Number = 2): Observable<any> {
+    return this.http.get<any>(this.userUrl + '?page=' + Page).pipe(
+        map((response : any) => this.processResponse(response))
+    );
+  }
 
   getUser(userid:string|number|any): Observable<any> {
     return this.http.get<any>(this.userUrl+'/'+userid).pipe(

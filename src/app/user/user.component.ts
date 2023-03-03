@@ -18,6 +18,11 @@ export class userComponent implements OnInit , OnDestroy{
   users: Response;
   userSub : Subscription;
 
+  //    Pagination
+  usersPerPage: number = 0;
+  totalUsers: number = 0;
+  public selectedPage = 1;
+
   constructor(private userService: UserService, private http: HttpClient) {}
 
   ngOnDestroy(): void {
@@ -25,18 +30,36 @@ export class userComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit(): void {
-    this.userSub = this.userService.getAllUsers().subscribe((results: any) => {
+    let page = JSON.parse(localStorage.getItem("page")!);
+    this.userSub = this.userService.getAllUsersByPage(page).subscribe((results: any) => {
       // console.log(results);
       this.response = results;
       this.users = results.metadata;
+
+      this.usersPerPage = results.metadata.per_page;
+      this.totalUsers = results.metadata.total;
+      // console.log(this.usersPerPage);      
     });
   }
 
-  public getm() {
-    this.http
-      .get('https://jsonplaceholder.typicode.com/posts/1')
-      .subscribe((data) => {
-        console.log(data);
-      });
+  get PageNumbers(): number[] {
+    return Array(Math.ceil(this.totalUsers / this.usersPerPage)).fill(0).map((x, i) =>i + 1);
+  }
+
+
+  changePage(pageNumber: number): void {
+    this.selectedPage = pageNumber;
+    this.userService.getAllUsersByPage(pageNumber).subscribe((results: any) => {
+      // console.log(results);
+      this.response = results;
+      this.users = results.metadata;
+
+      this.usersPerPage = results.metadata.per_page;
+      this.totalUsers = results.metadata.total;
+
+      localStorage.setItem("page" , JSON.stringify(this.selectedPage));
+
+    });
+    
   }
 }

@@ -10,6 +10,7 @@ import { UserService } from '../user.service';
 export class AddUserComponent implements OnInit {
 
   userForm!: FormGroup;
+  info: any;
 
   constructor(private userService: UserService) {}
 
@@ -25,9 +26,11 @@ export class AddUserComponent implements OnInit {
     this.userService.createUser(this.userForm.value).subscribe(
       (res) => {
         console.log(res);
+        this.info = 'user created successfully'
       },
       (err) => {
         console.log(err.error);
+        this.info = 'user created Unsuccessfully'
       }
     );
   }
