@@ -28,8 +28,11 @@ export class authComponent implements OnInit {
 
   register() {
     this.authService.registerUser(this.loginform.value).subscribe(
-      (user) => {
-        console.log(user);
+      (res) => {
+        this.token = res.token;    // Get the token        
+        this.addToAuthToLS(this.token);
+        this.router.navigate(['/users']);
+        console.log(res);
       },
       (err) => {
         console.log(err.error);
